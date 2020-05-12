@@ -1,12 +1,12 @@
 # base-image for python on any machine using a template variable,
 # see more about dockerfile templates here: https://www.balena.io/docs/learn/develop/dockerfile/
 # consider `*-build` for building and testing, but change to `*-run` for release.
-FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3.8-buster-build
+FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3.7-buster-build
 
 # use `install_packages` if you need to install dependencies,
 # for instance if you need git, just uncomment the line below.
 # RUN install_packages git
-RUN install_packages python-rpi.gpio python-spidev python-pil python-numpy
+RUN install_packages python3-rpi.gpio python3-spidev python3-pil python3-numpy
 
 # Set our working directory
 WORKDIR /usr/src/app
@@ -15,7 +15,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt requirements.txt
 
 # pip install python deps from requirements.txt on the resin.io build server
-RUN pip install -r requirements.txt
+RUN pip install --require-hashes -r requirements.txt
 
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
