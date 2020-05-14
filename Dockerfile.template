@@ -6,7 +6,10 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3.7-buster-build
 # use `install_packages` if you need to install dependencies,
 # for instance if you need git, just uncomment the line below.
 # RUN install_packages git
-RUN install_packages python3-rpi.gpio python3-spidev python3-pil python3-numpy
+# Packages for driving ST7789 display
+RUN install_packages libfreetype6 libfreetype6-dev python3-rpi.gpio python3-spidev python3-pil python3-numpy
+# Packages for driving audio
+RUN install_packages python3-dev libasound2-dev
 
 # Set our working directory
 WORKDIR /usr/src/app
@@ -24,4 +27,4 @@ COPY . ./
 ENV UDEV=1
 
 # main.py will run when container starts up on the device
-CMD ["python","-u","src/main.py"]
+CMD ["sh", "start.sh"]
